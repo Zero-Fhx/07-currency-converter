@@ -164,77 +164,71 @@ Este proyecto incluye todas las características esenciales de un conversor de d
 ```javascript
 const currencies = {
   USD: {
-    country: "Estados Unidos",
-    currencyName: "Dólar estadounidense",
-    symbol: "$",
+    country: 'Estados Unidos',
+    currencyName: 'Dólar estadounidense',
+    symbol: '$',
     rate: 1.0,
-    flag: "https://flagcdn.com/us.svg",
+    flag: 'https://flagcdn.com/us.svg'
   },
   EUR: {
-    country: "Unión Europea",
-    currencyName: "Euro",
-    symbol: "€",
+    country: 'Unión Europea',
+    currencyName: 'Euro',
+    symbol: '€',
     rate: 0.92,
-    flag: "https://flagcdn.com/eu.svg",
-  },
+    flag: 'https://flagcdn.com/eu.svg'
+  }
   // ... más divisas
-};
+}
 ```
 
 ### Algoritmo de Conversión
 
 ```javascript
-function convert() {
-  let amountValue = parseFloat(amount.value);
-  if (isNaN(amountValue)) amountValue = 0;
+function convert () {
+  let amountValue = parseFloat(amount.value)
+  if (isNaN(amountValue)) amountValue = 0
 
-  const fromRate = currencies[fromCurrency.value].rate;
-  const toRate = currencies[toCurrency.value].rate;
+  const fromRate = currencies[fromCurrency.value].rate
+  const toRate = currencies[toCurrency.value].rate
 
   // Conversión a través de USD como base
-  const convertedAmount = (amountValue / fromRate) * toRate;
+  const convertedAmount = (amountValue / fromRate) * toRate
 
   result.innerHTML = `
-    <p id="conversion-amount">${amountValue.toFixed(2)} ${
-    fromCurrency.value
-  } =</p>
-    <p id="conversion-result">${convertedAmount.toFixed(2)} ${
-    toCurrency.value
-  }</p>
-    <p id="conversion-rate">1 ${fromCurrency.value} = ${(
-    toRate / fromRate
-  ).toFixed(5)} ${toCurrency.value}</p>
-  `;
+    <p id="conversion-amount">${amountValue.toFixed(2)} ${fromCurrency.value} =</p>
+    <p id="conversion-result">${convertedAmount.toFixed(2)} ${toCurrency.value}</p>
+    <p id="conversion-rate">1 ${fromCurrency.value} = ${(toRate / fromRate).toFixed(5)} ${toCurrency.value}</p>
+  `
 }
 ```
 
 ### Función de Intercambio
 
 ```javascript
-swapButton.addEventListener("click", () => {
-  const temp = fromCurrency.value;
-  fromCurrency.value = toCurrency.value;
-  toCurrency.value = temp;
-  updateFlags(fromCurrency);
-  updateFlags(toCurrency);
-  convert();
-});
+swapButton.addEventListener('click', () => {
+  const temp = fromCurrency.value
+  fromCurrency.value = toCurrency.value
+  toCurrency.value = temp
+  updateFlags(fromCurrency)
+  updateFlags(toCurrency)
+  convert()
+})
 ```
 
 ### Actualización Dinámica de Banderas
 
 ```javascript
-function updateFlags(select) {
+function updateFlags (select) {
   const flagImg =
-    select.id === "from-currency"
-      ? document.getElementById("from-flag")
-      : document.getElementById("to-flag");
+    select.id === 'from-currency'
+      ? document.getElementById('from-flag')
+      : document.getElementById('to-flag')
 
   if (currencies[select.value]) {
-    flagImg.src = currencies[select.value].flag;
-    flagImg.style.display = "inline";
+    flagImg.src = currencies[select.value].flag
+    flagImg.style.display = 'inline'
   } else {
-    flagImg.style.display = "none";
+    flagImg.style.display = 'none'
   }
 }
 ```
@@ -242,13 +236,13 @@ function updateFlags(select) {
 ### Poblado Dinámico de Selects
 
 ```javascript
-function populateCurrencySelects() {
+function populateCurrencySelects () {
   for (const select of selects) {
     for (const currencyCode in currencies) {
-      const option = document.createElement("option");
-      option.value = currencyCode;
-      option.textContent = `${currencyCode} - ${currencies[currencyCode].currencyName}`;
-      select.appendChild(option);
+      const option = document.createElement('option')
+      option.value = currencyCode
+      option.textContent = `${currencyCode} - ${currencies[currencyCode].currencyName}`
+      select.appendChild(option)
     }
   }
 }
@@ -257,10 +251,10 @@ function populateCurrencySelects() {
 ### Validación de Entrada Numérica
 
 ```javascript
-amount.addEventListener("blur", (e) => {
-  let val = parseFloat(e.target.value);
-  e.target.value = isNaN(val) ? "0.00" : val.toFixed(2);
-});
+amount.addEventListener('blur', (e) => {
+  let val = parseFloat(e.target.value)
+  e.target.value = isNaN(val) ? '0.00' : val.toFixed(2)
+})
 ```
 
 ## 💱 Funcionalidades del Conversor
